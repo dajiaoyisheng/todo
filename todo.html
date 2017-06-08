@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .del {
+            text-decoration: line-through;
+        }
+    </style>
+    <link rel="stylesheet" href="bootstrap.css">
+</head>
+<body>
+<div id="app">
+    <div class="nav navbar-inverse">
+        <!--流式布局 放在一行-->
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand">ToDoList</a>
+            </div>
+            <!--导航-->
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <h3 class="text-danger">亲，您最近有{{total}}件要赶紧做的事！</h3>
+                <input type="text" class="form-control" placeholder="输入待办事项" @keyup.enter="add" v-model="todo">
+                <!--<button class="btn btn-primary btn-sm pull-right">确定</button>-->
+                <ul class="nav nav-pills" style="margin: 10px 0">
+                    <li :class="{active:hash=='complete'}"><a href="#complete">全部完成</a></li>
+                    <li :class="{active:hash=='finish'}"><a href="#finish">已完成</a></li>
+                    <li :class="{active:hash=='unfinish'}"><a href="#unfinish">未完成</a></li>
+                </ul>
+                <ul class="list-group">
+                    <!--循环算出来的列表todo in lists-->
+                    <li class="list-group-item" v-for="todo in lists" :class="{del:todo.isSelect}" @dblclick="change(todo)">
+                        <div v-show="todo!=t">
+                        <input type="checkbox" v-model="todo.isSelect">
+                        {{todo.tittle}}
+                        <button class="btn btn-danger pull-right btn-xs" @click="remove(todo)">&times;</button>
+                        </div>
+                        <input type="text" v-show="todo==t" v-model="todo.tittle" @keyup.enter="reset" @blur="reset" v-auto-focus="todo==t">
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="vue.js"></script>
+<script src="todo.js"></script>
+</body>
+</html>
